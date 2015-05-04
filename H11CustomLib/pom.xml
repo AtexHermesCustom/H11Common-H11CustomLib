@@ -3,6 +3,7 @@
   <groupId>com.atex.h11.custom</groupId>
   <artifactId>h11-custom-lib</artifactId>
   <version>1.0.0</version>
+  <packaging>jar</packaging>
   <name>h11-custom-lib</name>
   <description>H11 Custom Library</description>
   
