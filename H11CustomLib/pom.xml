@@ -45,7 +45,7 @@
       <groupId>com.unisys.media</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.0</version>
-      <scope>system</scope>
+      <scope>system</scope> 
       <systemPath>${h11.lib.path}/commons-logging.jar</systemPath>
     </dependency>	    
   </dependencies>    
