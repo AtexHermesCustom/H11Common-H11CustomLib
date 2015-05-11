@@ -108,11 +108,15 @@ public class HermesObject {
             throws UnsupportedEncodingException, IOException, 
                    XMLSerializeWriterException { 
     	logger.entering(loggerName, "write: object pk=" + objPK.getObjId());    	    	
-        NCMObjectValueClient objVC = (NCMObjectValueClient) ds.getNode(objPK, getBuildProperties());
+        NCMObjectValueClient objVC = getObjectValueClient(objPK);
         XMLSerializeWriter w = new XMLSerializeWriter(out);
         w.writeObject(objVC, getBuildProperties());
         w.close();
         logger.exiting(loggerName, "write");
+    }
+    
+    public NCMObjectValueClient getObjectValueClient(NCMObjectPK pk) {
+    	return (NCMObjectValueClient) ds.getNode(pk, getBuildProperties());
     }
 
 }

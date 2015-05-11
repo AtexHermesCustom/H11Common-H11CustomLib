@@ -139,10 +139,14 @@ public class PhysPage {
     public void write (NCMPhysPageIdentificator pk, OutputStream out)
 		    throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {    
     	logger.entering(loggerName, "write: physpage pk=" + pk.getIdenticator());    	      	
-        NCMPhysPageValueClient ppVC = (NCMPhysPageValueClient) ds.getNode(pk, getBuildProperties());
+        NCMPhysPageValueClient ppVC = getPhysPageValueClient(pk);
         XMLSerializeWriter w = new XMLSerializeWriter(out);
         w.writeObject(ppVC, getBuildProperties());
         w.close();
         logger.exiting(loggerName, "write");
+    }
+    
+    public NCMPhysPageValueClient getPhysPageValueClient(NCMPhysPageIdentificator pk) {
+    	return (NCMPhysPageValueClient) ds.getNode(pk, getBuildProperties());
     }
 }

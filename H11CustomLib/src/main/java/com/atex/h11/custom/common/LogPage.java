@@ -121,11 +121,15 @@ public class LogPage {
 	public void write (NCMLogicalPagePK pk, OutputStream out)
 		    throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {    
 		logger.entering(loggerName, "write: physpage pk=" + pk.getIdenticator(false));    	      	
-		NCMLogicalPageValueClient lpVC = (NCMLogicalPageValueClient) ds.getNode(pk, getBuildProperties());
+		NCMLogicalPageValueClient lpVC = getLogicalPageValueClient(pk);
 		XMLSerializeWriter w = new XMLSerializeWriter(out);
 		w.writeObject(lpVC, getBuildProperties());
 		w.close();
 		logger.exiting(loggerName, "write");
 	}    
+	
+	public NCMLogicalPageValueClient getLogicalPageValueClient(NCMLogicalPagePK pk) {
+		return (NCMLogicalPageValueClient) ds.getNode(pk, getBuildProperties());
+	}
     
 }

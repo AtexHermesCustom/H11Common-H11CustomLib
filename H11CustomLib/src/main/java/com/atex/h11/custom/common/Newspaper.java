@@ -140,11 +140,14 @@ public class Newspaper {
     public void write (NCMNewspaperIdentificator pk, OutputStream out)
     		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException { 
     	logger.entering(loggerName, "write: newspaper pk=" + pk.getIdenticator());        	
-    	NCMNewspaperValueClient npVC = (NCMNewspaperValueClient) ds.getNode(pk, getBuildProperties());
+    	NCMNewspaperValueClient npVC = getNewspaperValueClient(pk);
         XMLSerializeWriter w = new XMLSerializeWriter(out);
         w.writeObject(npVC, getBuildProperties());
         w.close();
         logger.exiting(loggerName, "write");
     }
 
+    public NCMNewspaperValueClient getNewspaperValueClient(NCMNewspaperIdentificator pk) {
+    	return (NCMNewspaperValueClient) ds.getNode(pk, getBuildProperties());
+    }
 }

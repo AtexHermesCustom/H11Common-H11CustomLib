@@ -140,11 +140,14 @@ public class Edition {
     public void write (NCMEditionIdentificator pk, OutputStream out)
     		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {    
     	logger.entering(loggerName, "write: edition pk=" + pk.getIdenticator());
-        NCMEditionValueClient edtVC = (NCMEditionValueClient) ds.getNode(pk, getBuildProperties());
+        NCMEditionValueClient edtVC = getEditionValueClient(pk);
         XMLSerializeWriter w = new XMLSerializeWriter(out);
         w.writeObject(edtVC, getBuildProperties());
         w.close();
         logger.exiting(loggerName, "write");    	
     }
     
+    public NCMEditionValueClient getEditionValueClient(NCMEditionIdentificator pk) {
+    	return (NCMEditionValueClient) ds.getNode(pk, getBuildProperties());
+    }
 }
