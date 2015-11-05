@@ -104,16 +104,24 @@ public class Newspaper {
     }
     
     public Document getDocument (String strLevel, int pubDate) 
-            throws UnsupportedEncodingException, IOException, 
-                   XMLSerializeWriterException, SAXException {
+    		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException, SAXException {
+    	return getDocument(strLevel, pubDate, (short) 0);
+    }
+    
+    public Document getDocument (String strLevel, int pubDate, short altNewspaperId) 
+            throws UnsupportedEncodingException, IOException, XMLSerializeWriterException, SAXException {
         UserHermesCfgValueClient cfgVC = ds.getUserHermesCfg();
         LevelValue levelV = cfgVC.findLevelByName(strLevel);
-        return getDocument(levelV.getId(), pubDate);
+        return getDocument(levelV.getId(), pubDate, altNewspaperId);
     }
     
     public Document getDocument (byte[] level, int pubDate) 
-            throws UnsupportedEncodingException, IOException, 
-                   XMLSerializeWriterException, SAXException {
+    		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException, SAXException {
+    	return getDocument(level, pubDate, (short) 0);
+    }
+    
+    public Document getDocument (byte[] level, int pubDate, short altNewspaperId) 
+            throws UnsupportedEncodingException, IOException, XMLSerializeWriterException, SAXException {
         ByteArrayOutputStream out = new ByteArrayOutputStream(8*1024*1024);
         write(level, pubDate, out);
         byte[] bytes = out.toByteArray();
@@ -122,17 +130,26 @@ public class Newspaper {
     }
     
     public void write (String strLevel, int pubDate, OutputStream out) 
-            throws UnsupportedEncodingException, IOException, 
-                   XMLSerializeWriterException {
-        UserHermesCfgValueClient cfgVC = ds.getUserHermesCfg();
-        LevelValue levelV = cfgVC.findLevelByName(strLevel);
-        write(levelV.getId(), pubDate, out);
+    		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {
+    	write(strLevel, pubDate, (short) 0, out);
     }
     
-    public void write (byte[] level, int pubDate, OutputStream out)
+    public void write (String strLevel, int pubDate, short altNewspaperId, OutputStream out) 
+            throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {
+        UserHermesCfgValueClient cfgVC = ds.getUserHermesCfg();
+        LevelValue levelV = cfgVC.findLevelByName(strLevel);
+        write(levelV.getId(), pubDate, altNewspaperId, out);
+    }
+    
+    public void write (byte[] level, int pubDate, OutputStream out) 
+    		throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {
+    	write(level, pubDate, (short) 0, out);
+    }
+    
+    public void write (byte[] level, int pubDate, short altNewspaperId, OutputStream out)
             throws UnsupportedEncodingException, IOException, XMLSerializeWriterException {
     	logger.entering(loggerName, "write: level=" + level + ", pubdate=" + pubDate);    	
-        NCMNewspaperIdentificator pk = new NCMNewspaperIdentificator(level, pubDate);
+        NCMNewspaperIdentificator pk = new NCMNewspaperIdentificator(level, pubDate, altNewspaperId);
         write(pk, out);
         logger.exiting(loggerName, "write");
     }
